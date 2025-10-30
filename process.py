@@ -42,9 +42,15 @@ if file_uploaded:
     read_df = pd.read_excel(file_uploaded)
     st.write("Preview of uploaded data")
     st.dataframe(df.head(5))
-    else: 
-        st.write("File not uploaded")
+else: 
+    st.write("File not uploaded")
 
 
 # open dataframe
+
+
+# In[ ]:
+
+
+
 
