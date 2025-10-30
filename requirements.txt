@@ -1,1 +1,1 @@
-streamlit
+torch transformers scipy scikit-learn sentencepiece rapidfuzz streamlit pandas
