@@ -2,7 +2,7 @@ torch
 transformers
 scipy
 scikit-learn
-sentencepiece
+sentence-transformers
 rapidfuzz
 streamlit
 pandas
