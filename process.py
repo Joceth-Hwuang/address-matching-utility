@@ -28,7 +28,7 @@ st.write("Please upload your excel workbook in this format")
 st.write("Column A = Address Unique ID. This helps you identify the address")
 st.write("Column B = Source Address")
 st.write("Column C = Target Address")
-st.divider
+st.divider()
 
 # file upload widget
 file_uploaded = st.file_uploader("Upload an Excel Workbook", type=["xlsx", "xls"])
