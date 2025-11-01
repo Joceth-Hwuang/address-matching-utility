@@ -26,7 +26,7 @@ class AppUserInterface:
         """
         cls.headings()
         cls.upload_widget()
-        while not uploaded_file:
+        while not cls.uploaded_file:
             cls.upload_widget()
     
     @classmethod    
@@ -52,6 +52,6 @@ class AppUserInterface:
 
 # In[ ]:
 
-
+AppUserInterface.execute()
 
 
