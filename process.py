@@ -28,7 +28,7 @@ class AppUserInterface:
         main method
         """
         cls.headings()
-        cls.upload_widget()
+        cls.uploaded_file = cls.upload_widget()
         cls.footer()
     
     @classmethod    
@@ -43,9 +43,8 @@ class AppUserInterface:
 
     @classmethod
     def upload_widget(cls):
-        cls.uploaded_file.append(
-        st.file_uploader("Upload an Excel Workbook", type=["xlsx", "xls"])
-        )
+        return st.file_uploader("Upload an Excel Workbook", type=["xlsx", "xls"])
+
     
     @classmethod    
     def footer(cls):    
