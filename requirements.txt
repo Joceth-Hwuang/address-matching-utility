@@ -6,5 +6,3 @@ sentence-transformers
 rapidfuzz
 streamlit
 pandas
-re
-io
