@@ -111,8 +111,12 @@ class Backend:
     @classmethod
     def read_data(cls, applicationRun=True):
         if applicationRun:
-            st.write(type(AppUserInterface.uploaded_file[0]))
-            df = pd.read_excel(AppUserInterface.uploaded_file[0])
+            if not AppUserInterface.uploaded_file:
+                st.warning("No file uploaded yet.")
+                return None
+            uploaded_file = AppUserInterface.uploaded_file[0]
+            uploaded_file.seek(0)
+            df = pd.read_excel(uploaded_file)
         else:
             path = f"{os.getcwd()}\\address_data_test.xlsx"
             df = pd.read_excel(path) # reads default file from github repo
