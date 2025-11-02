@@ -173,11 +173,9 @@ class Backend:
             with pd.ExcelWriter(tempOutput, engine='xlsxwriter') as writer:
                 for name, df in dataframes.items():
                     df.to_excel(writer, sheet_name=name[:31], index=False)
-
-        tempOutput.seek(0)
-        return tempOutput
-        
-        
+            tempOutput.seek(0)
+            return tempOutput
+    
         else:
             path = f"{os.getcwd()}\\output.xlsx"
             with pd.ExcelWriter(path, engine="openpyxl") as writer:
