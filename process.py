@@ -20,7 +20,7 @@ import os
 
 class AppUserInterface:
     
-    uploaded_file = []
+    uploaded_file = False
     
     @classmethod
     def execute(cls):
@@ -114,7 +114,7 @@ class Backend:
             if not AppUserInterface.uploaded_file:
                 st.warning("No file uploaded yet.")
                 return None
-            uploaded_file = AppUserInterface.uploaded_file[0]
+            uploaded_file = AppUserInterface.uploaded_file
             uploaded_file.seek(0)
             df = pd.read_excel(uploaded_file)
         else:
