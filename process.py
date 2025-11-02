@@ -111,6 +111,7 @@ class Backend:
     @classmethod
     def read_data(cls, applicationRun=True):
         if applicationRun:
+            st.write(type(AppUserInterface.uploaded_file[0]))
             df = pd.read_excel(AppUserInterface.uploaded_file[0])
         else:
             path = f"{os.getcwd()}\\address_data_test.xlsx"
