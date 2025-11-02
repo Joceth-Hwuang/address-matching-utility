@@ -7,3 +7,4 @@ rapidfuzz
 streamlit
 pandas
 openpyxl
+xlsxwriter
