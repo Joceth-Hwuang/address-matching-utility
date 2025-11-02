@@ -182,7 +182,7 @@ class Backend:
 # In[ ]:
 
 
-# AppUserInterface.execute()
+AppUserInterface.execute()
 if AppUserInterface.uploaded_file:
     Backend.execute_app()
 
