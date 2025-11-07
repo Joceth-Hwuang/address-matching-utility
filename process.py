@@ -43,9 +43,11 @@ class AppUserInterface:
 
     @classmethod
     def upload_widget(cls):
+        """
+        method to call the streamlit uploader, returns the uploaded file.
+        """
         return st.file_uploader("Upload an Excel Workbook", type=["xlsx", "xls"])
 
-    
     @classmethod    
     def footer(cls):    
         st.divider()
@@ -61,21 +63,25 @@ class Backend:
 
     @classmethod
     def execute_app(cls):
+        """
+        main method for executing within the streamlit app.
+        """
         df = cls.read_data()
         df['SBERT_Score(%)'] = cls.sbertProcessing(df)
         df['SBERT_Score(%)'] = df['SBERT_Score(%)']*100
         
         sbertNonMatch_df = df.loc[df['SBERT_Score(%)'] < 80].copy()
-        sbertMatch_df = df.loc[df['SBERT_Score(%)'] >= 80].copy()
         
-#         df['NormalizedNative'] = df['Native'].map(normalizeNumbers)
+        sbertMatch_df = df.loc[df['SBERT_Score(%)'] >= 80].copy()
         sbertMatch_df['NativeNumbers'] = sbertMatch_df['Native'].map(cls.normalizeNumbers).map(cls.extractNumbers)
         sbertMatch_df['EnglishNumbers'] = sbertMatch_df['English'].map(cls.extractNumbers)
         sbertMatch_df['NumbersFuzzy_Score(%)'] = cls.fuzzyProcessing(sbertMatch_df)
         
         fuzzyNonMatch_df = sbertMatch_df.loc[sbertMatch_df['NumbersFuzzy_Score(%)'] < 80].copy()
+        
         matchedAddresses_df = sbertMatch_df.loc[sbertMatch_df['NumbersFuzzy_Score(%)'] >= 80].copy()
         
+        st.write("Your file is being processed, thank you for waiting.")
         st.download_button(
             label='Click Here to get output',
             data = cls.output(
@@ -88,18 +94,22 @@ class Backend:
     
     @classmethod
     def execute(cls):
+        """
+        main method for executing in local environment without the streamlit app
+        """
         df = cls.read_data(applicationRun=False)
         df['SBERT_Score(%)'] = cls.sbertProcessing(df)
         df['SBERT_Score(%)'] = df['SBERT_Score(%)']*100
-        sbertNonMatch_df = df.loc[df['SBERT_Score(%)'] < 80].copy()
-        sbertMatch_df = df.loc[df['SBERT_Score(%)'] >= 80].copy()
         
-#         df['NormalizedNative'] = df['Native'].map(normalizeNumbers)
+        sbertNonMatch_df = df.loc[df['SBERT_Score(%)'] < 80].copy()
+        
+        sbertMatch_df = df.loc[df['SBERT_Score(%)'] >= 80].copy()
         sbertMatch_df['NativeNumbers'] = sbertMatch_df['Native'].map(cls.normalizeNumbers).map(cls.extractNumbers)
         sbertMatch_df['EnglishNumbers'] = sbertMatch_df['English'].map(cls.extractNumbers)
         sbertMatch_df['NumbersFuzzy_Score(%)'] = cls.fuzzyProcessing(sbertMatch_df)
         
         fuzzyNonMatch_df = sbertMatch_df.loc[sbertMatch_df['NumbersFuzzy_Score(%)'] < 80].copy()
+        
         matchedAddresses_df = sbertMatch_df.loc[sbertMatch_df['NumbersFuzzy_Score(%)'] >= 80].copy()
         cls.output(applicationRun=False,
             NoMatchSBERT=sbertNonMatch_df,
@@ -123,7 +133,10 @@ class Backend:
     
     @classmethod
     def normalizeNumbers(cls, addr_str):   
-        
+        """
+        passes a string in, mainly for japanaese addresses.
+        replaces large-font numbers with the regular numbers, and standardizes all hypens to the standard hypen.
+        """
         numbers_table = str.maketrans(
             {
                 "０": "0", 
@@ -143,6 +156,9 @@ class Backend:
         
     @classmethod
     def extractNumbers(cls, addr_str):
+        """
+        For fuzzy method. basically pops the numerals as strings
+        """
         pattern = r"\d+(?:-\d+)*"
         if not addr_str:
             return ""
@@ -188,6 +204,7 @@ class Backend:
 # In[ ]:
 
 
+#comment this out if running locally
 AppUserInterface.execute()
 if AppUserInterface.uploaded_file:
     Backend.execute_app()
